@@ -26,6 +26,7 @@ public class NPC : MonoBehaviour, Interactive
     private Vector3 destinationPosition;
     private Vector3 initialPosition;
     private Animator anim;
+    private Coroutine moveCoroutine;
 
     private void Awake()
     {
@@ -35,7 +36,7 @@ public class NPC : MonoBehaviour, Interactive
     private void Start()
     {
         anim = GetComponent<Animator>();
-        StartCoroutine(GoToDestinyAndWait());
+        moveCoroutine = StartCoroutine(GoToDestinyAndWait());
     }
 
     #region Movement Methods
@@ -43,17 +44,16 @@ public class NPC : MonoBehaviour, Interactive
     {
         while (!speaking)
         {
+                CalculateNewDestiny();
 
-            CalculateNewDestiny();
+                while (transform.position != destinationPosition)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, destinationPosition, movementVelocity * Time.deltaTime);
+                    yield return null;
+                }
 
-            while (transform.position != destinationPosition)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, destinationPosition, movementVelocity * Time.deltaTime);
-                yield return null;
-            }
-
-            anim.SetBool("walking", false);
-            yield return new WaitForSeconds(timeBetweenWaiting);
+                anim.SetBool("walking", false);
+                yield return new WaitForSeconds(timeBetweenWaiting);
         }
     }
 
@@ -146,7 +146,7 @@ public class NPC : MonoBehaviour, Interactive
     }
     public void Interact()
     {
-        StopCoroutine(GoToDestinyAndWait());
+        StopCoroutine(moveCoroutine);
         gameManager.ChangePlayerState(true);
         dialogueFrame.SetActive(true);
         if (!speaking)
@@ -185,7 +185,7 @@ public class NPC : MonoBehaviour, Interactive
 
         dialogueFrame.SetActive(false);
         gameManager.ChangePlayerState(false);
-        StartCoroutine(GoToDestinyAndWait());
+        moveCoroutine = StartCoroutine(GoToDestinyAndWait());
     }
     #endregion
 }

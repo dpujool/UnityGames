@@ -12,8 +12,11 @@ public class Player : MonoBehaviour
     private Animator anim;
     private bool interacting;
 
+    [SerializeField] private GameManagerSO gameManager;
+
     [Header("Movement System")]
     [SerializeField] private float movementVelocity;
+    [SerializeField] private GameObject interactPoint2;
     [SerializeField] private float interactRadius;
     [SerializeField] private LayerMask whatIsInteractive;
 
@@ -22,8 +25,12 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         anim = GetComponent<Animator>();
+        transform.position = gameManager.InitPlayerPosition;
+
+        anim.SetFloat("inputH", gameManager.InitPlayerRotation.x);
+        anim.SetFloat("inputV", gameManager.InitPlayerRotation.y);
+
     }
 
     // Update is called once per frame
@@ -67,7 +74,7 @@ public class Player : MonoBehaviour
             interactPoint = destinyPoint;
             frontCollider = LaunchCheck();
 
-            if (!frontCollider)
+            if (!frontCollider || frontCollider.TryGetComponent(out Door door))
             {
                 StartCoroutine(Move());
             }
@@ -125,6 +132,20 @@ public class Player : MonoBehaviour
                 interactive.Interact();
             }
         }
+    }
+
+    public bool CanActivateBomb()
+    {
+
+        Collider2D frontCollider = Physics2D.OverlapCircle(interactPoint, interactRadius);
+        if (frontCollider != null)
+        {
+            if (frontCollider.TryGetComponent(out WallToDestroy wall))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void OnDrawGizmos()

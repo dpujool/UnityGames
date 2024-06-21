@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbb0b764f534f524d9115b024ca8062d, type: 3}
   m_Name: GameManager
   m_EditorClassIdentifier: 
+  bomb: {fileID: 6919518974169234741, guid: 3dd3b928115e4be9bf4814ff0c42293f, type: 3}
