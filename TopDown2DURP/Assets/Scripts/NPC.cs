@@ -7,7 +7,6 @@ using UnityEngine.Windows;
 public class NPC : MonoBehaviour, Interactive
 {
     [SerializeField] private GameManagerSO gameManager;
-
     [Header("Movement System")]
     [SerializeField] private float movementVelocity;
     [SerializeField] private float timeBetweenWaiting;

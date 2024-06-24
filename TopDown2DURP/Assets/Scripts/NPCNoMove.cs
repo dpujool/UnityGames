@@ -9,34 +9,35 @@ public class NPCNoMove : MonoBehaviour, Interactive
     [SerializeField] private GameManagerSO gameManager;
 
     [Header("Dialogue System")]
-    [SerializeField, TextArea(1,5)] private string[] dialogueStrings;
+    [SerializeField, TextArea(1,5)] private string[] dialogueMission;
+    [SerializeField, TextArea(1, 5)] private string[] dialogueResult;
     [SerializeField] private float timeBetweenLetters;
     [SerializeField] private GameObject dialogueFrame;
     [SerializeField] private TextMeshProUGUI dialogueText;
     private bool speaking = false;
     private int dialogueCurrentIndex = -1;
 
-    private Vector3 destinationPosition;
-    private Vector3 initialPosition;
-    private Animator anim;
-
-    private void Awake()
-    {
-        initialPosition = transform.position;
-    }
-
-    private void Start()
-    {
-        anim = GetComponent<Animator>();
-    }
-
     #region Dialogue Methods
-    private IEnumerator WriteSentence()
+    private IEnumerator WriteSentenceMission()
     {
         speaking = true;
         dialogueText.text = string.Empty;
 
-        char[] sentenceCharacters = dialogueStrings[dialogueCurrentIndex].ToCharArray();
+        char[] sentenceCharacters = dialogueMission[dialogueCurrentIndex].ToCharArray();
+
+        foreach (char character in sentenceCharacters)
+        {
+            dialogueText.text += character;
+            yield return new WaitForSeconds(timeBetweenLetters);
+        }
+        speaking = false;
+    }
+    private IEnumerator WriteResultSentence()
+    {
+        speaking = true;
+        dialogueText.text = string.Empty;
+
+        char[] sentenceCharacters = dialogueResult[dialogueCurrentIndex].ToCharArray();
 
         foreach (char character in sentenceCharacters)
         {
@@ -49,32 +50,67 @@ public class NPCNoMove : MonoBehaviour, Interactive
     {
         gameManager.ChangePlayerState(true);
         dialogueFrame.SetActive(true);
+
         if (!speaking)
         {
-            FollowingSentence();
+            if (!gameManager.HasMando)
+            {
+                FollowingMissionSentence();
+            }
+            else
+            {
+                FollowingResultSentence();
+            }
         }
         else
         {
-            CompleteSentence();
+            if (!gameManager.HasMando)
+            {
+                CompleteMissionSentence();
+            }
+            else
+            {
+                CompleteResultSentence();
+            }
+            
         }
     }
 
-    private void FollowingSentence()
+    private void FollowingMissionSentence()
     {
         dialogueCurrentIndex++;
-        if(dialogueCurrentIndex >= dialogueStrings.Length)
+        if(dialogueCurrentIndex >= dialogueMission.Length)
         {
             FinishDialogue();
         }
         else
         {
-            StartCoroutine(WriteSentence());
+            StartCoroutine(WriteSentenceMission());
         }
     }
-    private void CompleteSentence()
+    private void FollowingResultSentence()
+    {
+        dialogueCurrentIndex++;
+        if (dialogueCurrentIndex >= dialogueResult.Length)
+        {
+            FinishDialogue();
+            gameManager.IsEnded= true;
+        }
+        else
+        {
+            StartCoroutine(WriteResultSentence());
+        }
+    }
+    private void CompleteMissionSentence()
     {
         StopAllCoroutines();
-        dialogueText.text = dialogueStrings[dialogueCurrentIndex];
+        dialogueText.text = dialogueMission[dialogueCurrentIndex];
+        speaking = false;
+    }
+    private void CompleteResultSentence()
+    {
+        StopAllCoroutines();
+        dialogueText.text = dialogueResult[dialogueCurrentIndex];
         speaking = false;
     }
     private void FinishDialogue()

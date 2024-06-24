@@ -44,6 +44,7 @@ public class InventorySystem : MonoBehaviour
                 buttons[buttonIndex].gameObject.SetActive(false);
                 enabledItems--;
                 items.Remove(buttonIndex);
+                inventoryFrame.SetActive(false);
             }
         }
     }

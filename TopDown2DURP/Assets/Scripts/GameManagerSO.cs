@@ -22,6 +22,10 @@ public class GameManagerSO : ScriptableObject
     private List<ItemSO> itemsRecolected = new List<ItemSO>();
     [NonSerialized]
     private InventorySystem inventory;
+    [NonSerialized]
+    private bool hasMando = false;
+    [NonSerialized]
+    private bool isEnded = false;
 
     private Player player;
 
@@ -31,6 +35,8 @@ public class GameManagerSO : ScriptableObject
     public Vector3 InitPlayerRotation { get => initPlayerRotation; }
     public Dictionary<int, bool> Items { get => items; set => items = value; }
     public List<ItemSO> ItemsRecolected { get => itemsRecolected; set => itemsRecolected = value; }
+    public bool HasMando { get => hasMando; set => hasMando = value; }
+    public bool IsEnded { get => isEnded; set => isEnded = value; }
 
     private void OnEnable()
     {
@@ -77,4 +83,5 @@ public class GameManagerSO : ScriptableObject
     {
         return player.CanActivateBomb();
     }
+
 }

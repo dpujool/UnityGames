@@ -129,6 +129,10 @@ public class Player : MonoBehaviour
         {
             if(frontCollider.TryGetComponent(out Interactive interactive))
             {
+                if (frontCollider.CompareTag("Mision"))
+                {
+                    gameManager.HasMando = true;
+                }
                 interactive.Interact();
             }
         }
