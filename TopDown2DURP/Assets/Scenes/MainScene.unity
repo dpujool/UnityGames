@@ -4918,49 +4918,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanvasDialog
       objectReference: {fileID: 0}
-    - target: {fileID: 1115299907078905750, guid: 9704052acdf27d24f8eb350f45713500,
-        type: 3}
-      propertyPath: m_text
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1115299907078905750, guid: 9704052acdf27d24f8eb350f45713500,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 1115299907078905750, guid: 9704052acdf27d24f8eb350f45713500,
-        type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 5911f25293692d646ab6f58a9fb552ef,
-        type: 2}
-    - target: {fileID: 1115299907078905750, guid: 9704052acdf27d24f8eb350f45713500,
-        type: 3}
-      propertyPath: m_fontSizeBase
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 1115299907078905750, guid: 9704052acdf27d24f8eb350f45713500,
-        type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: -6266049101624066501, guid: 5911f25293692d646ab6f58a9fb552ef,
-        type: 2}
-    - target: {fileID: 1115299907078905750, guid: 9704052acdf27d24f8eb350f45713500,
-        type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5388678433286686539, guid: 9704052acdf27d24f8eb350f45713500,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6772400735204611560, guid: 9704052acdf27d24f8eb350f45713500,
-        type: 3}
-      propertyPath: gameManager
-      value: 
-      objectReference: {fileID: 11400000, guid: 52a2ba26766d56149b19bbec07c3a2bc,
-        type: 2}
     - target: {fileID: 7118517316420860946, guid: 9704052acdf27d24f8eb350f45713500,
         type: 3}
       propertyPath: m_Pivot.x

@@ -1,8 +1,6 @@
 using System.Collections;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class NPCNoMove : MonoBehaviour, Interactive
 {
